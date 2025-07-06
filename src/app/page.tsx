@@ -1,7 +1,15 @@
+import { Presentation } from "@/lib/models/Presentation";
 import NewPresentation from "./_components/NewPresentation";
 import PresentationPreview from "./_components/PresentationPreview";
 
 export default function Home() {
+  const presentations: Presentation[] = [
+    {
+      id: 0,
+      title: "Teste",
+    },
+  ];
+
   return (
     <>
       <header className="flex items-center justify-center py-20">
@@ -9,12 +17,10 @@ export default function Home() {
       </header>
       <main className="flex justify-center px-40">
         <ul className="grid gap-x-8 gap-y-8 2xl:grid-cols-4 grid-cols-3">
-          {[0, 1].map((item) => (
+          {presentations.map((presentation) => (
             <PresentationPreview
-              presentation={{
-                id: item,
-              }}
-              key={item}
+              presentation={presentation}
+              key={presentation.id}
             />
           ))}
           <NewPresentation />

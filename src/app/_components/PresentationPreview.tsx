@@ -25,8 +25,7 @@ export default function PresentationPreview(props: Props) {
           ></div>
         </ViewTransition>
         <h3 className="text-center font-bold line-clamp-2">
-          aKLDJ AKLS:JDlkas kldjklasl ksadklasjdlk sajdklsajkld sdjlsak djlkas
-          klaskld ksad asdsad jkasldkj askl
+          {presentation.title}
         </h3>
       </li>
     </Link>

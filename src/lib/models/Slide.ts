@@ -15,6 +15,7 @@ export type SlideOptions = {
 }
 
 export type SlideImage = {
+  id: string
   type: 'image'
   image: string
   options: SlideOptions & {
@@ -23,6 +24,7 @@ export type SlideImage = {
 }
 
 export type SlideText = {
+  id: string
   type: 'text'
   options: SlideOptions & {
     text: string

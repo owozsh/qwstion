@@ -1,0 +1,122 @@
+import where from "@/lib/helpers/where";
+import { Slide, SlideElement } from "@/lib/models/Slide";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { v4 } from "uuid";
+
+type PresentationState = {
+  title: string
+  selectedSlide: number
+  selectedElement: string | null
+  slides: Slide[]
+}
+
+const INITIAL_STATE: PresentationState = {
+  title: 'New Presentation',
+  selectedSlide: 0,
+  selectedElement: null,
+  slides: [{
+    id: 0,
+    elements: []
+  }],
+} as const
+
+const presentationSlice = createSlice({
+  name: "presentation",
+  initialState: INITIAL_STATE,
+
+  reducers: {
+    selectSlide(state, action: PayloadAction<number>) {
+      state.selectedSlide = action.payload
+    },
+
+    addSlide(state) {
+      state.slides.push({
+        id: state.slides.length,
+        elements: []
+      })
+
+      state.selectedSlide = state.slides.length - 1
+    },
+
+    removeSlide(state, action: PayloadAction<number>) {
+      if (state.selectedSlide >= action.payload) {
+        state.selectedSlide = state.selectedSlide - 1
+      }
+
+      state.slides =
+        state
+          .slides
+          .filter(where('id').isNot(action.payload))
+          .map((slide, index) => ({
+            ...slide,
+            id: index
+          }))
+    },
+
+    updateElement(state, action: PayloadAction<SlideElement>) {
+      state.slides[state.selectedSlide].elements =
+        state
+          .slides[state.selectedSlide]
+          .elements
+          .map((element) => element.id === action.payload.id ? action.payload : element)
+    },
+
+    removeElement(state, action: PayloadAction<string>) {
+      state.slides[state.selectedSlide].elements =
+        state
+          .slides[state.selectedSlide]
+          .elements
+          .filter(where('id').equals(action.payload))
+    },
+
+    updateTitle(state, action: PayloadAction<string>) {
+      state.title = action.payload
+    },
+
+    addImage(state, action: PayloadAction<string>) {
+      state.slides[state.selectedSlide].elements.push({
+        id: v4(),
+        type: 'image',
+        image: action.payload,
+        options: {
+          x: 0,
+          y: 0,
+          width: 10,
+          height: 10,
+          alt: ''
+        }
+      })
+    },
+
+    addText(state) {
+      state.slides[state.selectedSlide].elements.push({
+        id: v4(),
+        type: 'text',
+        options: {
+          x: 100,
+          y: 100,
+          text: 'Teste',
+          fontSize: 48
+        }
+      })
+
+      console.log(state)
+    },
+
+    selectElement(state, action: PayloadAction<string>) {
+      state.selectedElement = action.payload
+    },
+
+    clearElementSelection(state) {
+      state.selectedElement = null
+    }
+  }
+});
+
+export const { reducer: presentationReducer } = presentationSlice;
+
+const PresentationStore = {
+  ...presentationSlice.actions
+}
+
+export default PresentationStore
