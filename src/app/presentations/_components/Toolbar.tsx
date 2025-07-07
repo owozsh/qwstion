@@ -1,5 +1,10 @@
+/**
+ * The Image component used is an image icon, not an actual image
+ */
+/* eslint-disable jsx-a11y/alt-text */
+
 import IconButton from "@/ui/IconButton";
-import { ImagePlus, Type } from "lucide-react";
+import { Image, Type } from "lucide-react";
 import { useDispatch } from "react-redux";
 import PresentationStore from "../_store/PresentationStore";
 
@@ -14,7 +19,7 @@ export default function Toolbar() {
     <ul className="flex items-center gap-2">
       <li>
         <IconButton>
-          <ImagePlus />
+          <Image />
         </IconButton>
       </li>
       <li>

@@ -78,13 +78,16 @@ const presentationSlice = createSlice({
         id: v4(),
         type: 'image',
         image: action.payload,
-        options: {
+        transform: {
           x: 0,
           y: 0,
           width: 10,
           height: 10,
-          alt: ''
-        }
+          scaleX: 1,
+          scaleY: 1,
+          rotation: 0
+        },
+        alt: ''
       })
     },
 
@@ -92,15 +95,16 @@ const presentationSlice = createSlice({
       state.slides[state.selectedSlide].elements.push({
         id: v4(),
         type: 'text',
-        options: {
+        text: 'Teste',
+        fontSize: 48,
+        transform: {
           x: 100,
           y: 100,
-          text: 'Teste',
-          fontSize: 48
+          scaleX: 1,
+          scaleY: 1,
+          rotation: 0
         }
       })
-
-      console.log(state)
     },
 
     selectElement(state, action: PayloadAction<string>) {
@@ -109,6 +113,10 @@ const presentationSlice = createSlice({
 
     clearElementSelection(state) {
       state.selectedElement = null
+    },
+
+    reset() {
+      return INITIAL_STATE
     }
   }
 });

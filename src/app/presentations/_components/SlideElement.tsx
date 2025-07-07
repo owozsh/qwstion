@@ -6,6 +6,7 @@ import PresentationStore from "../_store/PresentationStore";
 import { useEffect, useRef } from "react";
 import scope from "@/lib/helpers/scope";
 import { Box } from "konva/lib/shapes/Transformer";
+import Konva from "konva";
 
 const MIN_ELEMENT_SIZE = 50;
 const ENABLED_RESIZE_ANCHORS = [
@@ -50,20 +51,46 @@ export default function SlideElement(props: Props) {
     dispatch(PresentationStore.selectElement(props.element.id));
   };
 
-  const getElementProps = () => ({
-    ref,
-    isSelected,
-    onClick: handleSelect,
-    onTap: handleSelect,
-    draggable: true,
-  });
+  const handleTransform = (
+    event: Konva.KonvaEventObject<DragEvent | Event>
+  ) => {
+    const { x, y, scaleX, scaleY, width, height, rotation } =
+      event.target.attrs;
+
+    dispatch(
+      PresentationStore.updateElement({
+        ...props.element,
+        transform: {
+          ...props.element.transform,
+          x,
+          y,
+          scaleX,
+          scaleY,
+          width,
+          height,
+          rotation,
+        },
+      })
+    );
+  };
 
   const element = scope(() => {
     switch (props.element.type) {
       case "text":
-        return <Text {...props.element.options} {...getElementProps()} />;
-      // case "image":
-      //   return <Image {...element.options} image={} />;
+        return (
+          <Text
+            {...props.element.transform}
+            ref={ref}
+            isSelected={isSelected}
+            onClick={handleSelect}
+            onTap={handleSelect}
+            draggable
+            onTransformEnd={handleTransform}
+            onDragEnd={handleTransform}
+            text={props.element.text}
+            fontSize={props.element.fontSize}
+          />
+        );
       default:
         return null;
     }
