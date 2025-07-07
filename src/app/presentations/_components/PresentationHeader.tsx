@@ -6,6 +6,7 @@ import Link from "next/link";
 import Toolbar from "./Toolbar";
 import { useDispatch } from "react-redux";
 import PresentationStore from "../_store/PresentationStore";
+import Title from "./Title";
 
 export default function PresentationHeader() {
   const dispatch = useDispatch();
@@ -15,18 +16,23 @@ export default function PresentationHeader() {
   };
 
   return (
-    <header className="flex items-center justify-between">
-      <Link href="/">
-        <IconButton onClick={resetPresentationState}>
-          <ChevronLeft />
-          My Presentations
-        </IconButton>
-      </Link>
+    <header className="flex items-center">
+      <div className="flex justify-start flex-1 gap-3">
+        <Link href="/">
+          <IconButton onClick={resetPresentationState}>
+            <ChevronLeft />
+            My Presentations
+          </IconButton>
+        </Link>
+        <Title />
+      </div>
       <Toolbar />
-      <IconButton>
-        <Save />
-        Save
-      </IconButton>
+      <div className="flex justify-end flex-1">
+        <IconButton>
+          <Save />
+          Save
+        </IconButton>
+      </div>
     </header>
   );
 }
