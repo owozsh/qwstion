@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -21,6 +21,7 @@
     "react-dom": "^19.0.0",
     "react-konva": "^19.0.7",
     "react-redux": "^9.2.0",
+    "use-debounce": "^10.0.5",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

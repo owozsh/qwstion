@@ -35,7 +35,7 @@ export default function Title() {
   ) => {
     const newValue = event?.target.value ?? "";
 
-    dispatch(PresentationStore.updateTitle(newValue));
+    dispatch(PresentationStore.setTitle(newValue));
 
     const textToMeasure = newValue.length > 0 ? newValue : PLACEHOLDER;
     const measuredWidth = measureText(textToMeasure);
@@ -43,8 +43,8 @@ export default function Title() {
   };
 
   useEffect(() => {
-    const textToMeasure = title.length > 0 ? title : PLACEHOLDER;
-    const measuredWidth = measureText(textToMeasure);
+    const textToMeasure = title?.length ?? 0 > 0 ? title : PLACEHOLDER;
+    const measuredWidth = measureText(textToMeasure ?? "");
     setWidth(measuredWidth + 4);
   }, [title]);
 

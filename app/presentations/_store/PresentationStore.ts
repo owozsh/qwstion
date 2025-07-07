@@ -4,27 +4,35 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 } from "uuid";
 
 type PresentationState = {
-  title: string
+  id?: string
+  title?: string
   selectedSlide: number
   selectedElement: string | null
   slides: Slide[]
 }
 
 const INITIAL_STATE: PresentationState = {
-  title: 'New Presentation',
   selectedSlide: 0,
   selectedElement: null,
   slides: [{
     id: 0,
     elements: []
   }],
-} as const
+}
 
 const presentationSlice = createSlice({
   name: "presentation",
   initialState: INITIAL_STATE,
 
   reducers: {
+    setId(state, action: PayloadAction<string>) {
+      state.id = action.payload
+    },
+
+    setTitle(state, action: PayloadAction<string>) {
+      state.title = action.payload
+    },
+
     selectSlide(state, action: PayloadAction<number>) {
       state.selectedSlide = action.payload
     },
@@ -67,10 +75,6 @@ const presentationSlice = createSlice({
           .slides[state.selectedSlide]
           .elements
           .filter(where('id').equals(action.payload))
-    },
-
-    updateTitle(state, action: PayloadAction<string>) {
-      state.title = action.payload
     },
 
     addImage(state, action: PayloadAction<string>) {

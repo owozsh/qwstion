@@ -1,14 +1,10 @@
 import { Presentation } from "@/lib/models/Presentation";
 import NewPresentation from "./_components/NewPresentation";
 import PresentationPreview from "./_components/PresentationPreview";
+import prisma from "@/lib/prisma";
 
-export default function Home() {
-  const presentations: Presentation[] = [
-    {
-      id: 0,
-      title: "Teste",
-    },
-  ];
+export default async function Home() {
+  const presentations: Presentation[] = await prisma.presentation.findMany();
 
   return (
     <>
