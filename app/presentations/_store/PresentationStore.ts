@@ -1,4 +1,5 @@
 import where from "@/lib/helpers/where";
+import { Presentation } from "@/lib/models/Presentation";
 import { Slide, SlideElement } from "@/lib/models/Slide";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 } from "uuid";
@@ -27,6 +28,18 @@ const presentationSlice = createSlice({
   reducers: {
     setId(state, action: PayloadAction<string>) {
       state.id = action.payload
+    },
+
+    setPresentation(state, action: PayloadAction<Presentation>) {
+      const presentation = action.payload
+
+      state.title = presentation.title
+
+      if (presentation.slides.length > 0) {
+        state.slides = presentation.slides
+      } else {
+        state.slides = INITIAL_STATE.slides
+      }
     },
 
     setTitle(state, action: PayloadAction<string>) {
@@ -99,7 +112,7 @@ const presentationSlice = createSlice({
       state.slides[state.selectedSlide].elements.push({
         id: v4(),
         type: 'text',
-        text: 'Teste',
+        text: 'Text',
         fontSize: 48,
         transform: {
           x: 100,

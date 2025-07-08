@@ -7,13 +7,22 @@ import SlideElement from "./SlideElement";
 import { useDispatch } from "react-redux";
 import PresentationStore from "../_store/PresentationStore";
 import Konva from "konva";
+import { Loader } from "lucide-react";
 
 enum SlideEditorSize {
   WIDTH = 1280,
   HEIGHT = 720,
 }
 
-export default function SlideEditor() {
+const SLIDE_CONTAINER_STYLE = `w-[1280px] h-[720px] flex items-center justify-center bg-[#FDFCFA] border-1 border-solid border-black/15 rounded-3xl overflow-hidden`;
+
+type Props = {
+  isLoading?: boolean;
+};
+
+export default function SlideEditor(props: Props) {
+  const { isLoading = false } = props;
+
   const dispatch = useDispatch();
 
   const selectedSlide = useSelector((state) =>
@@ -32,10 +41,16 @@ export default function SlideEditor() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <main className={SLIDE_CONTAINER_STYLE}>
+        <Loader className="animate-spin" />
+      </main>
+    );
+  }
+
   return (
-    <main
-      className={`bg-[#FDFCFA] border-1 border-solid border-black/15 rounded-3xl overflow-hidden`}
-    >
+    <main className={SLIDE_CONTAINER_STYLE}>
       <Stage
         width={SlideEditorSize.WIDTH}
         height={SlideEditorSize.HEIGHT}

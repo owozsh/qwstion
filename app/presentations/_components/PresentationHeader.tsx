@@ -7,19 +7,34 @@ import Toolbar from "./Toolbar";
 import { useDispatch } from "react-redux";
 import PresentationStore from "../_store/PresentationStore";
 import Title from "./Title";
+import { useRouter } from "next/navigation";
+import Presentations from "@/lib/api/presentations";
+import useSelector from "@/lib/store/hooks/useSelector";
 
 export default function PresentationHeader() {
+  const router = useRouter();
+
   const dispatch = useDispatch();
 
-  const resetPresentationState = () => {
-    dispatch(PresentationStore.reset());
+  const presentation = useSelector((state) => state.presentation);
+
+  const handleSave = () => {
+    if (!presentation.id) return;
+
+    Presentations.update(presentation.id, {
+      title: presentation.title,
+      slides: presentation.slides,
+    }).finally(() => {
+      router.push("/");
+      dispatch(PresentationStore.reset());
+    });
   };
 
   return (
     <header className="flex items-center">
       <div className="flex justify-start flex-1 gap-3">
         <Link href="/">
-          <IconButton onClick={resetPresentationState}>
+          <IconButton onClick={handleSave}>
             <ChevronLeft />
             My Presentations
           </IconButton>
@@ -28,7 +43,7 @@ export default function PresentationHeader() {
       </div>
       <Toolbar />
       <div className="flex justify-end flex-1">
-        <IconButton>
+        <IconButton onClick={handleSave}>
           <Save />
           Save
         </IconButton>
