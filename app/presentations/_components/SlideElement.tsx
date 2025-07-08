@@ -48,6 +48,7 @@ export default function SlideElement(props: Props) {
   }, [isSelected, transformerRef, ref]);
 
   const handleSelect = () => {
+    if (disableTransform) return;
     dispatch(PresentationStore.selectElement(props.element.id));
   };
 
@@ -84,7 +85,7 @@ export default function SlideElement(props: Props) {
             isSelected={isSelected}
             onClick={handleSelect}
             onTap={handleSelect}
-            draggable
+            draggable={!disableTransform}
             onTransformEnd={handleTransform}
             onDragEnd={handleTransform}
             text={props.element.text}
