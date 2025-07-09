@@ -1,17 +1,14 @@
-"use client";
-
 import { Presentation } from "@/lib/models/Presentation";
 import NewPresentation from "./_components/NewPresentation";
 import PresentationPreview from "./_components/PresentationPreview";
-import useSWR from "swr";
-import Routes, { getRoute } from "@/lib/routes";
-import fetcher from "@/lib/api/fetcher";
+import prisma from "@/lib/prisma";
 
-export default function Home() {
-  const presentations = useSWR<Presentation[]>(
-    getRoute(Routes.Presentations.all),
-    fetcher
-  );
+export default async function Home() {
+  const presentations = await prisma.presentation.findMany({
+    orderBy: {
+      id: "desc",
+    },
+  });
 
   return (
     <>
@@ -20,10 +17,10 @@ export default function Home() {
       </header>
       <main className="flex justify-center px-40">
         <ul className="grid gap-x-8 gap-y-8 2xl:grid-cols-4 grid-cols-3">
-          {presentations.data?.map((presentation) => (
+          {presentations?.map((presentation) => (
             <PresentationPreview
               key={presentation.id}
-              presentation={presentation}
+              presentation={presentation as Presentation}
             />
           ))}
           <NewPresentation />

@@ -28,10 +28,11 @@ export default function PresentationHeader() {
     Presentations.update(presentation.id, {
       title: presentation.title,
       slides: presentation.slides,
-    }).finally(() => {
-      mutate(getRoute(Routes.Presentations.all));
-      router.push("/");
-      dispatch(PresentationStore.reset());
+    }).then(() => {
+      mutate(getRoute(Routes.Presentations.all)).then(() => {
+        router.push("/");
+        dispatch(PresentationStore.reset());
+      });
     });
   };
 
