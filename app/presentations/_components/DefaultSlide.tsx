@@ -7,6 +7,7 @@ import { Layer, Stage } from "react-konva";
 import SlideElement from "./SlideElement";
 import { DefaultSlide as DefaultSlideType } from "@/lib/models/Slide";
 import { SlidePreviewSize } from "./PresentationNavigation";
+import { PreviewSize } from "@/app/_components/PresentationSlidePreview";
 
 enum SlideEditorSize {
   WIDTH = 1280,
@@ -59,6 +60,30 @@ export function DefaultSlideNavigationPreview(props: {
       height={SlidePreviewSize.HEIGHT}
       scaleX={0.15}
       scaleY={0.15}
+      s
+    >
+      <Layer>
+        {slide.elements
+          .map((element) => (
+            <SlideElement element={element} key={element.id} disableTransform />
+          ))
+          .filter(Boolean)}
+      </Layer>
+    </Stage>
+  );
+}
+
+export function DefaultSlidePresentationPreview(props: {
+  slide: DefaultSlideType;
+}) {
+  const { slide } = props;
+
+  return (
+    <Stage
+      width={PreviewSize.WIDTH}
+      height={PreviewSize.HEIGHT}
+      scaleX={0.25}
+      scaleY={0.25}
       s
     >
       <Layer>

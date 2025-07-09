@@ -184,8 +184,20 @@ export function MultipleChoiceSlideNavigationPreview(props: {
   const { slide } = props;
 
   return (
-    <div className="flex items-center justify-center p-4 max-w-[192px] max-h-[108px]">
+    <div className="flex items-center justify-center p-4 w-[192px] h-[108px]">
       <span className="font-bold text-xs line-clamp-4">{slide.question}</span>
+    </div>
+  );
+}
+
+export function MultipleChoiceSlidePresentationPreview(props: {
+  slide: MultipleChoiceSlideType;
+}) {
+  const { slide } = props;
+
+  return (
+    <div className="flex items-center justify-center p-4 w-[320px] h-[180px]">
+      <span className="font-bold text-md line-clamp-4">{slide.question}</span>
     </div>
   );
 }

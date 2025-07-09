@@ -1,10 +1,11 @@
 "use client";
 
 import { Slide } from "@/lib/models/Slide";
-import { Layer, Stage } from "react-konva";
-import SlideElement from "../presentations/_components/SlideElement";
+import { DefaultSlidePresentationPreview } from "../presentations/_components/DefaultSlide";
+import scope from "@/lib/helpers/scope";
+import { MultipleChoiceSlidePresentationPreview } from "../presentations/_components/MultipleChoiceSlide";
 
-enum PreviewSize {
+export enum PreviewSize {
   WIDTH = 320,
   HEIGHT = 180,
 }
@@ -22,25 +23,16 @@ export default function PresentationSlidePreview(props: Props) {
     <div
       className={`rounded-3xl w-[${PreviewSize.WIDTH}] h-[${PreviewSize.HEIGHT}] bg-[#FDFCFA] border-1 border-solid border-black/15`}
     >
-      <Stage
-        width={PreviewSize.WIDTH}
-        height={PreviewSize.HEIGHT}
-        scaleX={0.25}
-        scaleY={0.25}
-        s
-      >
-        <Layer>
-          {(slide?.elements ?? [])
-            .map((element) => (
-              <SlideElement
-                element={element}
-                key={element.id}
-                disableTransform
-              />
-            ))
-            .filter(Boolean)}
-        </Layer>
-      </Stage>
+      {scope(() => {
+        switch (slide.type) {
+          case "default":
+            return <DefaultSlidePresentationPreview slide={slide} />;
+          case "multiple-choice":
+            return <MultipleChoiceSlidePresentationPreview slide={slide} />;
+          default:
+            return null;
+        }
+      })}
     </div>
   );
 }

@@ -36,10 +36,10 @@ export default function PresentationPreview(props: Props) {
         <ViewTransition name={`presentation-${presentation.id}`}>
           <PresentationSlidePreview slide={preview} />
         </ViewTransition>
-        <h3 className="text-center font-bold line-clamp-2">
-          {presentation.title}
-        </h3>
       </Link>
+      <h3 className="text-center font-bold line-clamp-2">
+        {presentation.title}
+      </h3>
     </li>
   );
 }
