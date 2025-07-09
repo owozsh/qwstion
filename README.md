@@ -25,7 +25,7 @@ npm run dev
 
 ## About the project
 
-Qwstion is a slider editor that supports both free slide editing and interactive slides (at the moment it only supports **Multiple Choice** interactive slides).
+Qwstion is a slides editor that supports both free slide editing and interactive slides (at the moment it only supports **Multiple Choice** interactive slides).
 
 This project was created using tools such as Next.js, Tailwind, Redux Toolkit, Konva, Prisma, PostgreSQL and Socket.IO.
 
