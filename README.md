@@ -1,7 +1,8 @@
 # Qwstion
 
-![Qwstion application screenshot](preview-1.png)
-![Qwstion application screenshot](preview-2.png)
+![Qwstion application screenshot 1](preview-1.png)
+![Qwstion application screenshot 2](preview-2.png)
+![Qwstion application screenshot 3](preview-3.png)
 
 ## Requirements
 
