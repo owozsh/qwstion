@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Plus, Check, Trash2, Save, Pencil } from "lucide-react";
+import React, { useCallback, useEffect, useState } from "react";
+import { Plus, Check, Trash2, Save, Pencil, Ban } from "lucide-react";
 import { v4 } from "uuid";
 import Label from "@/ui/Label";
 import IconButton from "@/ui/IconButton";
@@ -31,12 +31,16 @@ export default function MultipleChoiceSlide() {
     selectedSlide.correctChoice
   );
 
-  useEffect(() => {
+  const resetSlide = useCallback(() => {
     stopEditing();
     setQuestion(selectedSlide.question);
     setChoices(selectedSlide.choices);
     setCorrectChoice(selectedSlide.correctChoice);
   }, [selectedSlide, stopEditing]);
+
+  useEffect(() => {
+    resetSlide();
+  }, [resetSlide]);
 
   const addChoice = () => {
     setChoices([
@@ -157,16 +161,22 @@ export default function MultipleChoiceSlide() {
         </div>
 
         {isEditing ? (
-          <IconButton
-            onClick={handleSave}
-            disabled={!isFormValid}
-            className={`py-2 px-4 ${
-              isFormValid ? "" : "bg-[#faf9f5] !cursor-not-allowed"
-            }`}
-          >
-            <Save />
-            Save
-          </IconButton>
+          <div className="flex gap-3">
+            <IconButton onClick={resetSlide} className="py-2 px-4">
+              <Ban />
+              Cancel
+            </IconButton>
+            <IconButton
+              onClick={handleSave}
+              disabled={!isFormValid}
+              className={`py-2 px-4 ${
+                isFormValid ? "" : "bg-[#faf9f5] !cursor-not-allowed"
+              }`}
+            >
+              <Save />
+              Save
+            </IconButton>
+          </div>
         ) : (
           <IconButton onClick={startEditing} className="py-2 px-4">
             <Pencil />
