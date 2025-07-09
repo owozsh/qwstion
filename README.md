@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Qwstion
+
+![Qwstion application screenshot](preview-1.png)
+![Qwstion application screenshot](preview-2.png)
+
+## Requirements
+
+- Node.js `v24.3.0`
 
 ## Getting Started
 
-First, run the development server:
+| Make sure you have a .env with `POSTGRES_URL`, `PRISMA_DATABASE_URL` and `DATABASE_URL` configured.
+
+First, install all dependencies:
+
+```bash
+npm i
+```
+
+And then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## About the project
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Qwstion is a slider editor that supports both free slide editing and interactive slides (at the moment it only supports **Multiple Choice** interactive slides).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project was created using tools such as Next.js, Tailwind, Redux Toolkit, Konva, Prisma, PostgreSQL and Socket.IO.
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+- app
+  - The folder structure follows Next.js routing structure, where the files inside the app folder defines the routing of the application.
+  - All business related components are organized at the `_components` folders and redux store slices at `_store` folders. This facilitates refactorings, code reusability in other applications and prevents frequent file navigation as the project grows.
+- ui
+  - The UI folder contain reusable components with **no** business logic. This improves code reusability in other projects and the design experience.
+- lib
+  - This is the place for heavily reused code, such as helpers, hooks and service instances.
+- pages
+  - The folder structure follows Next.js routing structure. This is used exclusively for routing and controlling the REST Api.
+- public
+  - Mostly static files
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| This project cannot be deployed on vercel, since it uses a custom server for Socket.IO support. Alternatives like SSEs are not optimal for this application use cases, so a custom server is necessary.
