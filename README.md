@@ -9,7 +9,7 @@
 
 ## Getting Started
 
-| Make sure you have a .env with `POSTGRES_URL`, `PRISMA_DATABASE_URL` and `DATABASE_URL` configured.
+> Make sure you have a .env with `POSTGRES_URL`, `PRISMA_DATABASE_URL` and `DATABASE_URL` configured.
 
 First, install all dependencies:
 
@@ -43,4 +43,4 @@ This project was created using tools such as Next.js, Tailwind, Redux Toolkit, K
 - public
   - Mostly static files
 
-| This project cannot be deployed on vercel, since it uses a custom server for Socket.IO support. Alternatives like SSEs are not optimal for this application use cases, so a custom server is necessary.
+> This project cannot be deployed on vercel, since it uses a custom server for Socket.IO support. Alternatives like SSEs are not optimal for this application use cases, so a custom server is necessary.
