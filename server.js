@@ -13,8 +13,7 @@ app.prepare().then(() => {
 
   const io = new Server(httpServer);
 
-  io.on("connection", (socket) => {
-  });
+  io.on("connection", (socket) => {});
 
   httpServer
     .once("error", (err) => {

@@ -19,6 +19,7 @@ export default function NewPresentation() {
       title: "New Presentation",
     }).then(async (presentation) => {
       setId(presentation.id);
+      setTimeout(() => router.push(`/presentations/${id}`), 16);
     });
   };
 
@@ -37,7 +38,7 @@ export default function NewPresentation() {
       className="flex flex-col item-center gap-y-3 hover:cursor-pointer hover:-translate-y-1 transition-transform ease-in-out w-[${CardSize.WIDTH}]"
       onClick={handleCreatePresentation}
     >
-      <ViewTransition name={`presentation-${id}`}>
+      <ViewTransition name={`presentation-${id ?? "new"}`}>
         <div className="flex items-center justify-center rounded-3xl w-[320px] h-[180px] bg-[#FDFCFA] border-1 border-solid border-black/15">
           <Plus size={36} strokeWidth={4} />
         </div>
