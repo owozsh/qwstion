@@ -1,15 +1,16 @@
 "use client";
 
-import { Layer, Stage } from "react-konva";
-import SlideElement from "./SlideElement";
 import { X } from "lucide-react";
 import PresentationStore from "../_store/PresentationStore";
 import { useDispatch } from "react-redux";
 import useSelector from "@/lib/store/hooks/useSelector";
 import IconButton from "@/ui/IconButton";
 import NewSlide from "./NewSlide";
+import { DefaultSlideNavigationPreview } from "./DefaultSlide";
+import scope from "@/lib/helpers/scope";
+import { MultipleChoiceSlideNavigationPreview } from "./MultipleChoiceSlide";
 
-enum SlidePreviewSize {
+export enum SlidePreviewSize {
   WIDTH = 192,
   HEIGHT = 108,
 }
@@ -65,25 +66,16 @@ export default function PresentationNavigation() {
             </IconButton>
           )}
           <div className={PREVIEW_STYLE}>
-            <Stage
-              width={SlidePreviewSize.WIDTH}
-              height={SlidePreviewSize.HEIGHT}
-              scaleX={0.15}
-              scaleY={0.15}
-              s
-            >
-              <Layer>
-                {slide.elements
-                  .map((element) => (
-                    <SlideElement
-                      element={element}
-                      key={element.id}
-                      disableTransform
-                    />
-                  ))
-                  .filter(Boolean)}
-              </Layer>
-            </Stage>
+            {scope(() => {
+              switch (slide.type) {
+                case "default":
+                  return <DefaultSlideNavigationPreview slide={slide} />;
+                case "multiple-choice":
+                  return <MultipleChoiceSlideNavigationPreview slide={slide} />;
+                default:
+                  return null;
+              }
+            })}
           </div>
           <span
             className={getSlideNumberStyle({

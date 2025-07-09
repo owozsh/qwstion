@@ -62,7 +62,7 @@ export default function Title() {
         name="presentation-title"
         ref={input}
         type="text"
-        value={title}
+        value={title ?? ""}
         onChange={handleChangeTitle}
         placeholder={PLACEHOLDER}
         className="focus:outline-none active:outline-none z-10"

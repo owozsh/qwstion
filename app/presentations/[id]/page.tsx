@@ -19,7 +19,9 @@ export default function Presentation() {
 
   const id = pathname?.split("/").at(-1) ?? "";
 
-  store.dispatch(PresentationStore.setId(id));
+  useEffect(() => {
+    store.dispatch(PresentationStore.setId(id));
+  }, [id]);
 
   const [isLoading, setLoading] = useState(true);
 

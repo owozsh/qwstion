@@ -16,16 +16,16 @@ const SLIDE_OPTIONS: Array<{
     type: "multiple-choice",
     color: "#D38457",
   },
-  {
-    label: "Word Cloud",
-    type: "word-cloud",
-    color: "#C25C5C",
-  },
-  {
-    label: "Ranking",
-    type: "ranking",
-    color: "#C25C83",
-  },
+  // {
+  //   label: "Word Cloud",
+  //   type: "word-cloud",
+  //   color: "#C25C5C",
+  // },
+  // {
+  //   label: "Ranking",
+  //   type: "ranking",
+  //   color: "#C25C83",
+  // },
   {
     label: "Default",
     type: "default",

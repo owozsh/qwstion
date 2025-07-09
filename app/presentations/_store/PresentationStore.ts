@@ -1,6 +1,6 @@
 import where from "@/lib/helpers/where";
 import { Presentation } from "@/lib/models/Presentation";
-import { Slide, SlideElement } from "@/lib/models/Slide";
+import { DefaultSlide, Slide, SlideElement } from "@/lib/models/Slide";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 } from "uuid";
 
@@ -54,13 +54,38 @@ const presentationSlice = createSlice({
     addSlide(state, action: PayloadAction<Pick<Slide, 'type'>>) {
       const { type } = action.payload
 
-      state.slides.push({
-        id: state.slides.length,
-        type,
-        elements: []
-      })
+      switch (type) {
+        case 'default':
+          state.slides.push({
+            id: state.slides.length,
+            type,
+            elements: []
+          })
+
+          break
+        case 'multiple-choice':
+          state.slides.push({
+            id: state.slides.length,
+            type,
+            question: '',
+            correctChoice: null,
+            choices: [
+              { id: v4(), text: "" },
+              { id: v4(), text: "" },
+            ]
+          })
+
+          break
+      }
 
       state.selectedSlide = state.slides.length - 1
+    },
+
+    updateSlide<T>(state: PresentationState, action: PayloadAction<Partial<T>>) {
+      state.slides[state.selectedSlide] = {
+        ...state.slides[state.selectedSlide],
+        ...action.payload
+      }
     },
 
     removeSlide(state, action: PayloadAction<number>) {
@@ -79,23 +104,21 @@ const presentationSlice = createSlice({
     },
 
     updateElement(state, action: PayloadAction<SlideElement>) {
-      state.slides[state.selectedSlide].elements =
-        state
-          .slides[state.selectedSlide]
+      (state.slides[state.selectedSlide] as DefaultSlide).elements =
+        (state.slides[state.selectedSlide] as DefaultSlide)
           .elements
           .map((element) => element.id === action.payload.id ? action.payload : element)
     },
 
     removeElement(state, action: PayloadAction<string>) {
-      state.slides[state.selectedSlide].elements =
-        state
-          .slides[state.selectedSlide]
+      (state.slides[state.selectedSlide] as DefaultSlide).elements =
+        (state.slides[state.selectedSlide] as DefaultSlide)
           .elements
           .filter(where('id').equals(action.payload))
     },
 
     addImage(state, action: PayloadAction<string>) {
-      state.slides[state.selectedSlide].elements.push({
+      (state.slides[state.selectedSlide] as DefaultSlide).elements.push({
         id: v4(),
         type: 'image',
         image: action.payload,
@@ -113,7 +136,7 @@ const presentationSlice = createSlice({
     },
 
     addText(state) {
-      state.slides[state.selectedSlide].elements.push({
+      (state.slides[state.selectedSlide] as DefaultSlide).elements.push({
         id: v4(),
         type: 'text',
         text: 'Text',

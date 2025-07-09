@@ -1,7 +1,22 @@
-export type Slide = {
+export type Slide = DefaultSlide | MultipleChoiceSlide
+
+export type DefaultSlide = {
   id: number
-  type: SlideType
+  type: 'default'
   elements: SlideElement[]
+}
+
+export type MultipleChoiceSlide = {
+  id: number
+  type: 'multiple-choice'
+  question: string,
+  correctChoice: string | null,
+  choices: Choice[]
+}
+
+export type Choice = {
+  id: string,
+  text: string
 }
 
 export type SlideType =
