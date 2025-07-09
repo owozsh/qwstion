@@ -17,6 +17,7 @@ const INITIAL_STATE: PresentationState = {
   selectedElement: null,
   slides: [{
     id: 0,
+    type: 'default',
     elements: []
   }],
 }
@@ -50,9 +51,12 @@ const presentationSlice = createSlice({
       state.selectedSlide = action.payload
     },
 
-    addSlide(state) {
+    addSlide(state, action: PayloadAction<Pick<Slide, 'type'>>) {
+      const { type } = action.payload
+
       state.slides.push({
         id: state.slides.length,
+        type,
         elements: []
       })
 

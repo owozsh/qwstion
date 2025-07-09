@@ -10,11 +10,15 @@ import Title from "./Title";
 import { useRouter } from "next/navigation";
 import Presentations from "@/lib/api/presentations";
 import useSelector from "@/lib/store/hooks/useSelector";
+import { useSWRConfig } from "swr";
+import Routes, { getRoute } from "@/lib/routes";
 
 export default function PresentationHeader() {
   const router = useRouter();
 
   const dispatch = useDispatch();
+
+  const { mutate } = useSWRConfig();
 
   const presentation = useSelector((state) => state.presentation);
 
@@ -25,6 +29,7 @@ export default function PresentationHeader() {
       title: presentation.title,
       slides: presentation.slides,
     }).finally(() => {
+      mutate(getRoute(Routes.Presentations.all));
       router.push("/");
       dispatch(PresentationStore.reset());
     });

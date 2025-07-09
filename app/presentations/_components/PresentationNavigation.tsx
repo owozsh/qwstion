@@ -2,19 +2,20 @@
 
 import { Layer, Stage } from "react-konva";
 import SlideElement from "./SlideElement";
-import { Plus, X } from "lucide-react";
+import { X } from "lucide-react";
 import PresentationStore from "../_store/PresentationStore";
 import { useDispatch } from "react-redux";
 import useSelector from "@/lib/store/hooks/useSelector";
 import IconButton from "@/ui/IconButton";
+import NewSlide from "./NewSlide";
 
 enum SlidePreviewSize {
   WIDTH = 192,
   HEIGHT = 108,
 }
 
-const PREVIEW_STYLE =
-  "flex items-center justify-center bg-[#FDFCFA] border-1 border-solid border-black/15 hover:border-black/30 hover:-translate-y-1 transition-transform ease-in-out cursor-pointer rounded-3xl w-[192px] h-[108px] overflow-hidden";
+export const PREVIEW_STYLE =
+  "flex items-center justify-center bg-[#FDFCFA] border-1 border-solid border-black/15 hover:border-black/30 hover:-translate-y-1 transition-transform ease-in-out cursor-pointer rounded-3xl min-w-[192px] h-[108px] overflow-hidden";
 
 function getSlideNumberStyle(params: { index: number; selectedSlide: number }) {
   const colors =
@@ -37,10 +38,6 @@ export default function PresentationNavigation() {
     (state) => state.presentation.selectedSlide
   );
 
-  const handleAddSlide = () => {
-    dispatch(PresentationStore.addSlide());
-  };
-
   const handleRemoveSlide =
     (index: number) => (event: React.MouseEvent<HTMLButtonElement>) => {
       event.stopPropagation();
@@ -52,7 +49,7 @@ export default function PresentationNavigation() {
   };
 
   return (
-    <ul className="flex gap-3">
+    <ul className="flex gap-3 items-end max-h-[136px] overflow-visible">
       {slides.map((slide, index) => (
         <li
           className="relative flex flex-col items-center gap-1 group"
@@ -98,9 +95,7 @@ export default function PresentationNavigation() {
           </span>
         </li>
       ))}
-      <li className={PREVIEW_STYLE} onClick={handleAddSlide}>
-        <Plus size={24} strokeWidth={3} />
-      </li>
+      <NewSlide />
     </ul>
   );
 }

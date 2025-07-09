@@ -2,14 +2,14 @@ import handle, { Controller } from "@/lib/handle";
 import prisma from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const PresentationsController: Controller = {
-  async show(_req: NextApiRequest, res: NextApiResponse) {
+class PresentationsController implements Controller {
+  static async show(_req: NextApiRequest, res: NextApiResponse) {
     const presentations = await prisma.presentation.findMany();
 
     res.status(200).json(presentations);
-  },
+  }
 
-  async create(req: NextApiRequest, res: NextApiResponse) {
+  static async create(req: NextApiRequest, res: NextApiResponse) {
     const { title } = req.body;
 
     const presentation = await prisma.presentation.create({

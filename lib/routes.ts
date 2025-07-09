@@ -6,9 +6,11 @@ export function getRoute(route: string) {
 
 const Routes = {
   Presentations: {
+    all: 'presentations',
     create: 'presentations',
     update: (id: string) => `presentations/${id}`,
-    show: (id: string) => `presentations/${id}`
+    show: (id: string) => `presentations/${id}`,
+    delete: (id: string) => `presentations/${id}`
   }
 }
 

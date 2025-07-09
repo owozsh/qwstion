@@ -1,7 +1,14 @@
 export type Slide = {
   id: number
+  type: SlideType
   elements: SlideElement[]
 }
+
+export type SlideType =
+  | 'default'
+  | 'multiple-choice'
+  | 'word-cloud'
+  | 'ranking'
 
 export type SlideElement =
   | SlideImage

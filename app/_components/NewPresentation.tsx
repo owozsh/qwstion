@@ -8,7 +8,6 @@ import {
 } from "react";
 import Presentations from "@/lib/api/presentations";
 import { useRouter } from "next/navigation";
-import { Presentation } from "@/lib/models/Presentation";
 
 export default function NewPresentation() {
   const router = useRouter();
@@ -18,8 +17,7 @@ export default function NewPresentation() {
   const handleCreatePresentation = async () => {
     Presentations.create({
       title: "New Presentation",
-    }).then(async (response) => {
-      const presentation = (await response.json()) as Presentation;
+    }).then(async (presentation) => {
       setId(presentation.id);
       router.push(`/presentations/${presentation.id}`);
     });

@@ -33,4 +33,12 @@ export default class Presentations {
 
     return await res.json()
   }
+
+  static async delete(id: string) {
+    const res = await fetch(getRoute(Routes.Presentations.delete(id)), {
+      method: 'DELETE',
+    });
+
+    return await res.json()
+  }
 }
