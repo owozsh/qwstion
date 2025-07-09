@@ -19,7 +19,6 @@ export default function NewPresentation() {
       title: "New Presentation",
     }).then(async (presentation) => {
       setId(presentation.id);
-      router.push(`/presentations/${presentation.id}`);
     });
   };
 
